@@ -9,14 +9,14 @@ land_use_gdf = gpd.read_file(land_use_map_path)
 predicted_buildings_gdf = gpd.read_file(predicted_buildings_path)
 
 ###### Identify intersection
-predicted_buildings_gdf = predicted_buildings_gdf.sjoin(land_use_gdf[land_use_gdf['Art'] == 'Gebaeude'], how='left', op='intersects')
+predicted_buildings_gdf = predicted_buildings_gdf.sjoin(land_use_gdf[land_use_gdf['Art'] == 'Gebaeude'], how='left', predicate='intersects')
 
 ###### Update attributes
 predicted_buildings_gdf['Art'] = 'Gebaeude'
 predicted_buildings_gdf['new_construct'] = 1 
 
 ###### Add to map
-land_use_gdf = land_use_gdf.append(predicted_buildings_gdf, ignore_index=True)
+land_use_gdf = gpd.GeoDataFrame(pd.concat([land_use_gdf, predicted_buildings_gdf], ignore_index=True))
 
 ###### Buffer around the new buildings to identify the surrounding areas
 ###### Identify surrounding "Acker_Wiese_Weide" areas and update them to "Pavement"
