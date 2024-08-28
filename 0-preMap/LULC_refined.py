@@ -8,9 +8,7 @@ from rasterio.features import shapes
 from shapely.geometry import shape
 import numpy as np
 import pandas as pd
-from shapely.geometry import Polygon
 from shapely.ops import unary_union
-
 
 lcsf_path = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/1_predict_newbds_parcels/lcsf.shp"
 lulc_raster_path = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/3_reclassify_LULC_for_cal/LULC_raster/LULC_SZ.tif"
@@ -54,11 +52,16 @@ for value in np.unique(reclassified_raster):
 
 cc_gdf = gpd.GeoDataFrame(cc_polygons, crs=raster_crs)
 
-# Smooth vector borders, reduce aliasing
-cc_gdf['geometry'] = cc_gdf['geometry'].buffer(0.5).simplify(0.01)
+# Debugging: Check the initial number of polygons and their area
+print("Initial number of polygons in cc_gdf:", len(cc_gdf))
+print("Total area in cc_gdf before simplification:", cc_gdf.area.sum())
 
-# Combine into one geometry
-cc_gdf = gpd.GeoDataFrame(geometry=[unary_union(cc_gdf['geometry'])], crs=cc_gdf.crs)
+# Smooth vector borders, reduce aliasing
+cc_gdf['geometry'] = cc_gdf['geometry'].buffer(2).simplify(0.01)
+
+# Debugging: Check the number of polygons and their area after simplification
+print("Number of polygons in cc_gdf after simplification:", len(cc_gdf))
+print("Total area in cc_gdf after simplification:", cc_gdf.area.sum())
 
 # Ensure the CRS matches the LCSF shapefile
 if lcsf_gdf.crs != cc_gdf.crs:
@@ -69,11 +72,12 @@ excluded_art_values = ["Gebaeude", "uebrige_befestigte", "Fels", "Gartenanlage",
 excluded_gdf = lcsf_gdf[lcsf_gdf["Art"].isin(excluded_art_values)]
 included_gdf = lcsf_gdf[~lcsf_gdf["Art"].isin(excluded_art_values)]
 
-# Perform intersection prioritizing the LCSF polygons' shapes
-intersection_gdf = included_gdf.intersection(cc_gdf.unary_union)
+# Perform intersection after smoothing
+intersection_gdf = gpd.overlay(included_gdf, cc_gdf, how="intersection")
 
-# Convert the result into a GeoDataFrame with the original attributes
-intersection_gdf = gpd.GeoDataFrame(included_gdf, geometry=intersection_gdf, crs=included_gdf.crs)
+# Debugging: Check if intersection_gdf is non-empty
+print("Number of polygons after intersection:", len(intersection_gdf))
+print("Total area after intersection:", intersection_gdf.area.sum())
 
 # Combine the excluded polygons back with the intersected result
 final_gdf = pd.concat([excluded_gdf, intersection_gdf], ignore_index=True)
