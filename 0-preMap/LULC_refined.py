@@ -8,6 +8,10 @@ from rasterio.features import shapes
 from shapely.geometry import shape
 import numpy as np
 import pandas as pd
+from shapely.geometry import Polygon
+from shapely.ops import unary_union
+
+
 
 lcsf_path = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/1_predict_newbds_parcels/lcsf.shp"
 lulc_raster_path = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/3_reclassify_LULC_for_cal/LULC_raster/LULC_SZ.tif"
@@ -17,10 +21,13 @@ with rasterio.open(lulc_raster_path) as src:
     raster_data = src.read(1)  # Read the first band
     raster_transform = src.transform
     raster_nodata = src.nodata
+    raster_crs = src.crs 
 
+print(f"LCSF CRS: {lcsf_gdf.crs}")
+print(f"Raster CRS: {raster_crs}")
 
-# Aggregation values into 17 combination categories(CC)
-# CC12-Productive forest; CC13-Unproductive forest; CC21-Cropland; CC31-Permanent Grassland; CC32-Shrub Vegetation; CC33-Vineyard, low-stem orchard, tree nursery; CC34-Copse; CC35-Orchard; CC36-Stony grassland; CC37-Unproductive grassland; CC39-Vineyard, low-stem orchard, tree nursery; CC41-Surface water; CC42-Unproductive wetland; CC51-Buildings and constructions; CC52-Transport surfaces; CC53-Special Urban Areas; CC54-Recreational areas and cemeteries; CC61-Other land
+##### Aggregation values into 17 combination categories(CC)
+###### CC12-Productive forest; CC13-Unproductive forest; CC21-Cropland; CC31-Permanent Grassland; CC32-Shrub Vegetation; CC33-Vineyard, low-stem orchard, tree nursery; CC34-Copse; CC35-Orchard; CC36-Stony grassland; CC37-Unproductive grassland; CC39-Vineyard, low-stem orchard, tree nursery; CC41-Surface water; CC42-Unproductive wetland; CC51-Buildings and constructions; CC52-Transport surfaces; CC53-Special Urban Areas; CC54-Recreational areas and cemeteries; CC61-Other land
 
 cc_mapping = {
     1: 51, 2: 51, 3: 51, 4: 51, 5: 51, 6: 51, 7: 51, 8: 51, 9: 51, 10: 51,
@@ -34,36 +41,42 @@ cc_mapping = {
 }
 
 
-# Reclassify raster based on combination categories
+##### Reclassify raster based on combination categories
 reclassified_raster = np.copy(raster_data)
 for original_value, cc_value in cc_mapping.items():
     reclassified_raster[raster_data == original_value] = cc_value
 
 
 
-# Convert the reclassified raster to vector polygons
+##### Convert the reclassified raster to vector polygons
 cc_polygons = []
 for value in np.unique(reclassified_raster):
     if value != raster_nodata:  # Ignore nodata values
         shapes_generator = shapes(reclassified_raster, mask=(reclassified_raster == value), transform=raster_transform)
         for geom, val in shapes_generator:
-            if val:  # Make sure there is a valid geometry
+            if val:  # valid geometry
                 cc_polygons.append({"geometry": shape(geom), "CC": value})
 
 cc_gdf = gpd.GeoDataFrame(cc_polygons)
 
+##### Smooth vector borders, reduce aliasing
+cc_gdf['geometry'] = cc_gdf['geometry'].buffer(0.5).simplify(0.01)
+cc_gdf['geometry'] = unary_union(cc_gdf['geometry'])
 
-# Exclude polygons with specific "Art" values from the intersection
+##### Exclude polygons with specific "Art" values from the intersection
 excluded_art_values = ["Gebaeude", "uebrige_befestigte", "Fels", "Gartenanlage", "Bahn", "Trottoir", "Reben", "Strasse_Weg", "Verkehrsinsel", "Gewaesser_stehendes", "Wasserbecken"]
 excluded_gdf = lcsf_gdf[lcsf_gdf["Art"].isin(excluded_art_values)]
 included_gdf = lcsf_gdf[~lcsf_gdf["Art"].isin(excluded_art_values)]
 
 
 
-# Perform intersection between the included polygons and the CC polygons
-intersection_gdf = gpd.overlay(included_gdf, cc_gdf, how="intersection")
+##### Perform intersection between the included polygons and the CC polygons
+intersection_gdf = included_gdf.intersection(cc_gdf.unary_union)
+###### Convert the result into a GeoDataFrame with the original attributes
+intersection_gdf = gpd.GeoDataFrame(included_gdf, geometry=intersection_gdf, crs=included_gdf.crs)
 
-# Combine the excluded polygons back with the intersected result
+
+##### Combine the excluded polygons back with the intersected result
 final_gdf = pd.concat([excluded_gdf, intersection_gdf], ignore_index=True)
 
 
