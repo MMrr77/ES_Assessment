@@ -1,3 +1,7 @@
+"""
+Reclassify the LULC raster to 17 combination categories (CC) 
+Intersect it with the Land Cover Statistics of Switzerland (LCSF) shapefile
+"""
 import geopandas as gpd
 import rasterio
 from rasterio.features import shapes
@@ -5,10 +9,10 @@ from shapely.geometry import shape
 import numpy as np
 import pandas as pd
 
+lcsf_path = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/1_predict_newbds_parcels/lcsf.shp"
+lulc_raster_path = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/3_reclassify_LULC_for_cal/LULC_raster/LULC_SZ.tif"
 
-lcsf_gdf = gpd.read_file("lcsf.shp")
-lulc_raster_path = "lulc.tif"
-
+lcsf_gdf = gpd.read_file(lcsf_path)
 with rasterio.open(lulc_raster_path) as src:
     raster_data = src.read(1)  # Read the first band
     raster_transform = src.transform
@@ -41,16 +45,19 @@ for original_value, cc_value in cc_mapping.items():
 cc_polygons = []
 for value in np.unique(reclassified_raster):
     if value != raster_nodata:  # Ignore nodata values
-        shapes_generator = shapes(reclassified_raster == value, transform=raster_transform)
+        shapes_generator = shapes(reclassified_raster, mask=(reclassified_raster == value), transform=raster_transform)
         for geom, val in shapes_generator:
-            cc_polygons.append({"geometry": shape(geom), "CC": value})
+            if val:  # Make sure there is a valid geometry
+                cc_polygons.append({"geometry": shape(geom), "CC": value})
 
 cc_gdf = gpd.GeoDataFrame(cc_polygons)
 
+
 # Exclude polygons with specific "Art" values from the intersection
-excluded_art_values = ["Gebaeude", "uebrige_befestigte", "Fels", "Gartenanlage", "Bahn", "Trottoir", "Reben", "Strasse_Weg", "Verkehrsinsel", "Gewaesser_stehendes", "Wasserbecken" ]
+excluded_art_values = ["Gebaeude", "uebrige_befestigte", "Fels", "Gartenanlage", "Bahn", "Trottoir", "Reben", "Strasse_Weg", "Verkehrsinsel", "Gewaesser_stehendes", "Wasserbecken"]
 excluded_gdf = lcsf_gdf[lcsf_gdf["Art"].isin(excluded_art_values)]
 included_gdf = lcsf_gdf[~lcsf_gdf["Art"].isin(excluded_art_values)]
+
 
 
 # Perform intersection between the included polygons and the CC polygons
@@ -60,5 +67,5 @@ intersection_gdf = gpd.overlay(included_gdf, cc_gdf, how="intersection")
 final_gdf = pd.concat([excluded_gdf, intersection_gdf], ignore_index=True)
 
 
-final_gdf.to_file("lcsf_with_cc_final.shp")
-print("Final shapefile saved as 'lcsf_with_cc_final.shp'.")
+final_gdf.to_file("/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/3_reclassify_LULC_for_cal/lcsf_sj_cc.shp")
+print("Final shapefile saved as 'lcsf_sj_cc.shp'.")
