@@ -1,4 +1,11 @@
+"""
+1. Aggregate predicted building information to the land use map.
+2. Mark new buildings with column 'new_construct' = 1.
+3. Change land use type of surrounding areas of new buildings to 'Pavement', with the buffer distance of 20 meters.
+"""
+
 import geopandas as gpd
+import pandas as pd
 from shapely.geometry import Polygon
 
 ###### lcsf map and buildings footprint shp

@@ -1,3 +1,7 @@
+"""
+1. Create rectangles around the centroids of predicted building parcels.
+"""
+
 import pandas as pd
 import geopandas as gpd
 from shapely.geometry import Point, Polygon, box
