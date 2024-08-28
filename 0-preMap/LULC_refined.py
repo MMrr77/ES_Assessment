@@ -83,5 +83,5 @@ print("Total area after intersection:", intersection_gdf.area.sum())
 final_gdf = pd.concat([excluded_gdf, intersection_gdf], ignore_index=True)
 
 # Save the final shapefile
-final_gdf.to_file("/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/3_reclassify_LULC_for_cal/lcsf_sj_cc.shp")
+final_gdf.to_file("/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/3_reclassify_LULC   _for_cal/lcsf_sj_cc.shp")
 print("Final shapefile saved as 'lcsf_sj_cc.shp'.")
