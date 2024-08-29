@@ -1,23 +1,23 @@
-Art	LandUse	CN_HSG_B
-Gebaeude	Buildings	98
-Acker_Wiese_Weide	Agricultural land	81
-uebrige_befestigte	Other paved areas	98
-uebrige_bestockte	Other forested areas	60
-Gartenanlage	Gardens	74
-uebrige_humusierte	Other humus-covered areas	62
-Fels	Rock	40
-Abbau_Deponie	Quarry/Mining/Disposal areas	88
-Bahn	Railway	79
-Trottoir	Sidewalk	98
-uebrige_vegetationslose	Other non-vegetated areas	88
-Schilfguertel	Reed belts	60
-uebrige_Intensivkultur	Other intensive cultivation areas	81
-Hoch_Flachmoor	High/Low moor (peatland)	60
-Geroell_Sand	Gravel and sand	58
-Reben	Vineyards	74
-geschlossener_Wald	Closed forest	60
-Gewaesser_fliessendes	Flowing water bodies	NaN
-Wasserbecken	Water basins	NaN
-Verkehrsinsel	Traffic islands	90
-Strasse_Weg	Roads/Paths	88
-Gewaesser_stehendes	Standing water bodies	NaN
+Art;Land Use type;CN_HSG_B
+Gebaeude;Buildings;98
+Acker_Wiese_Weide;Agricultural land;81
+uebrige_befestigte;Other paved areas;98
+uebrige_bestockte;Other forested areas;60
+Gartenanlage;Gardens;74
+uebrige_humusierte;Other humus-covered areas;62
+Fels;Rock;40
+Abbau_Deponie;Quarry/Mining/Disposal areas;88
+Bahn;Railway;79
+Trottoir;Sidewalk;98
+uebrige_vegetationslose;Other non-vegetated areas;88
+Schilfguertel;Reed belts;60
+uebrige_Intensivkultur;Other intensive cultivation areas;81
+Hoch_Flachmoor;High/Low moor (peatland);60
+Geroell_Sand;Gravel and sand;58
+Reben;Vineyards;74
+geschlossener_Wald;Closed forest;60
+Gewaesser_fliessendes;Flowing water bodies;NaN
+Wasserbecken;Water basins;NaN
+Verkehrsinsel;Traffic islands;90
+Strasse_Weg;Roads/Paths;88
+Gewaesser_stehendes;Standing water bodies;NaN

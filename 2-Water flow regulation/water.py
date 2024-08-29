@@ -21,7 +21,10 @@ runoff_vector_path = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-De
 
 
 lcsf_gdf = gpd.read_file(lcsf_path)
-cn_df = pd.read_csv(cn_csv_path)
+cn_df = pd.read_csv(cn_csv_path, delimiter=';')
+print("Columns in lcsf_gdf:", lcsf_gdf.columns)
+print("Columns in cn_df:", cn_df.columns)
+
 
 # Merge Art and CN values
 lcsf_gdf = lcsf_gdf.merge(cn_df, how='left', on='Art')
