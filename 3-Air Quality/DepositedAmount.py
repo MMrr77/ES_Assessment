@@ -4,7 +4,6 @@ from rasterio.mask import mask
 import pandas as pd
 import numpy as np
 from shapely.geometry import mapping
-import os
 
 
 target_crs = "EPSG:2056"
@@ -32,17 +31,17 @@ with rasterio.open(lai_raster) as src:
 
     # Extract cleaned actual LAI value to each polygon
     deposited_amounts = []
-    
+
     for idx, row in lcsf_gdf.iterrows():
         # Mask
         geom = [mapping(row.geometry)]
         out_image, out_transform = mask(src, geom, crop=True)
-        out_image = out_image[0]  # Extract the first band
+        out_image = out_image[0]  # band 1
         
-        # Calculate mean LAI within the polygon
-        lai_mean = np.mean(out_image[out_image > 0])  # Consider only positive values
+
+        lai_mean = np.mean(out_image[out_image > 0])  # filter positive
         
-        # Calculate Deposited Amount, t = 1s
+        # Velocity t = 1s
         deposited_amount = lai_mean * row["Vd"] * 1.0
         deposited_amounts.append(deposited_amount)
         
