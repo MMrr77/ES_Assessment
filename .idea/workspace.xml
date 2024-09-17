@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="170f7ff3-938f-43a7-97ac-210c3de6057e" name="Changes" comment="Merge remote-tracking branch 'origin/macLocal' into macLocal">
-      <change afterPath="$PROJECT_DIR$/1-Temperature regulation/Temp.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2-Water flow regulation/water.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dataIntegration.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/predMap.py" afterDir="false" />
+    <list default="true" id="170f7ff3-938f-43a7-97ac-210c3de6057e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2-Water/water_zonalstats.py" beforeDir="false" afterPath="$PROJECT_DIR$/2-Water/water_zonalstats.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3-Air Quality/DepositedAmount.py" beforeDir="false" afterPath="$PROJECT_DIR$/3-Air Quality/DepositedAmount.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codeLog.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,19 +24,6 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <favorite-branches>
-      <branch-storage>
-        <map>
-          <entry type="LOCAL">
-            <value>
-              <list>
-                <branch-info repo="$PROJECT_DIR$" source="macLocal" />
-              </list>
-            </value>
-          </entry>
-        </map>
-      </branch-storage>
-    </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="main" />
@@ -52,12 +39,12 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/MMrr77/ES_Assessment.git&quot;,
+    &quot;url&quot;: &quot;git@github.com:MMrr77/ES_Assessment.git&quot;,
     &quot;accountId&quot;: &quot;bb79e560-48bc-4af5-b3e8-4e8432c2578c&quot;
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/2-Water flow regulation/water.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/2-Water/water_zonalstats.py" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
@@ -67,20 +54,71 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "macLocal",
-    "last_opened_file_path": "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.maddyhome.idea.vim.ui.VimEmulationConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.DepositedAmount.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ES_Configuration.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;macLocal&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings module-name="ES_Assessment" is-module-sdk="true">
+        <envs>
+          <env key="PROJ_LIB" value="/Library/anaconda3/envs/MT_ESA/share/proj " />
+        </envs>
+        <option name="myUseModuleSdk" value="true" />
+        <option name="myModuleName" value="ES_Assessment" />
+        <option name="myEnvs">
+          <map>
+            <entry key="PROJ_LIB" value="/Library/anaconda3/envs/MT_ESA/share/proj " />
+          </map>
+        </option>
+      </console-settings>
+    </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="ES_Assessment" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="PROJ_LIB" value="/Library/anaconda3/envs/MT_ESA/share/proj" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="MT_ESA" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -99,44 +137,25 @@
       <updated>1721031522267</updated>
       <workItem from="1721031523308" duration="182000" />
       <workItem from="1721032880127" duration="16795000" />
-      <workItem from="1721121428076" duration="4196000" />
-      <workItem from="1721305788052" duration="3871000" />
-      <workItem from="1721762802003" duration="6750000" />
+      <workItem from="1721121428076" duration="2259000" />
+      <workItem from="1725227027410" duration="6000" />
+      <workItem from="1725227045022" duration="1562000" />
+      <workItem from="1725258712848" duration="12866000" />
+      <workItem from="1725631742290" duration="963000" />
     </task>
-    <task id="LOCAL-00001" summary="add">
-      <option name="closed" value="true" />
-      <created>1721305745347</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1721305745347</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Merge remote-tracking branch 'origin/macLocal' into macLocal">
-      <option name="closed" value="true" />
-      <created>1721305766272</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1721305766272</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Merge remote-tracking branch 'origin/macLocal' into macLocal">
-      <option name="closed" value="true" />
-      <created>1721305812905</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1721305812905</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="add all" />
-    <MESSAGE value="add" />
-    <MESSAGE value="Merge remote-tracking branch 'origin/macLocal' into macLocal" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/macLocal' into macLocal" />
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/ES_Assessment$Temp2.coverage" NAME="Temp2 Coverage Results" MODIFIED="1725145718581" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/1-Temperature regulation" />
+    <SUITE FILE_PATH="coverage/ES_Assessment$water.coverage" NAME="water Coverage Results" MODIFIED="1724933844763" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/2-Water flow regulation" />
+    <SUITE FILE_PATH="coverage/ES_Assessment$ES_Configuration.coverage" NAME="ES_Configuration Coverage Results" MODIFIED="1725631748539" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ES_Assessment$DepositedAmount.coverage" NAME="ES_Configuration Coverage Results" MODIFIED="1725563116821" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ES_Assessment$test.coverage" NAME="test Coverage Results" MODIFIED="1725549555925" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
