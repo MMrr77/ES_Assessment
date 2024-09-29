@@ -29,7 +29,7 @@ building_land = land_types[land_types['typ_kommun'].isin(allowed_typ_kommun)]
 # spatial intersection between parcels with EGID and the filtered building land
 intersected = gpd.overlay(parcels_with_egid, building_land, how='intersection')
 
-# Dissolve by EGRID
+# Dissolve by EGID
 intersected_dissolved = intersected.dissolve(by='GWR_EGID')
 
 # Compute area ratio - only significant overlaps are considered
@@ -37,7 +37,7 @@ intersected_dissolved['intersect_area'] = intersected_dissolved.area
 parcels_with_egid['parcel_area'] = parcels_with_egid.area
 
 # Merge the intersected dissolved data back
-merged = parcels_with_egid.merge(intersected_dissolved[['intersect_area']], how='left', on='EGRID')
+merged = parcels_with_egid.merge(intersected_dissolved[['intersect_area']], how='left', on='GWR_EGID')
 
 # area ratio
 merged['area_ratio'] = merged['intersect_area'] / merged['parcel_area']
