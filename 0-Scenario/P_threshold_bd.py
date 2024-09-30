@@ -7,7 +7,7 @@ from shapely import affinity
 import numpy as np
 import math
 
-noBD_conparcels = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/1_predict_newbds_parcels/noBD_conparcel.shp"
+noBD_conparcels = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/1_predict_newbds_parcels/noBD_conparcel_grun.shp"
 
 conparcel_FAR = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/1_predict_newbds_parcels/conparcel_FAR.shp"
 
@@ -41,21 +41,20 @@ def calculate_far(row):
     VG = regulation['VG']
     use_rate = regulation['use_rate']
     
-    # Building footprint
-    building_footprint = use_rate * row['geometry'].area  
+    building_footprint = row['BDFT_pred']  # Get building footprint from the row
 
-    # maximum floor area
+    # Calculate maximum floor area
     max_floor_area = building_footprint * VG
 
-    parcel_area = row['parcel_are']
-    # Floor area ratio (p)
-    floor_area_ratio = max_floor_area / parcel_area  # 
+    parcel_area = row['Flaeche']  # Get parcel area from the row
+    # Calculate Floor Area Ratio (FAR)
+    floor_area_ratio = max_floor_area / parcel_area
     
     # Store calculated values
     row['zone'] = regulation['zone']
     row['VG'] = VG
     row['use_rate'] = use_rate
-    row['bdft'] = building_footprint
+    row['BDFT_pred'] = building_footprint
     row['max_floor_area'] = max_floor_area
     row['FAR'] = floor_area_ratio
     
@@ -78,7 +77,7 @@ total_area = 0
 
 for _, row in parcels_sorted.iterrows():
     selected_parcels_list.append(row) 
-    total_area += row['parcel_are']
+    total_area += row['Flaeche']
     if total_area >= threshold_area:
         break
 
@@ -128,7 +127,7 @@ for _, row in selected_parcels.iterrows():
     centroid = row['geometry'].centroid
 
     ##### get VG and bdft
-    building_footprint = row['bdft']
+    building_footprint = row['BDFT_pred']
     VG = row['VG']
 
     side_length = np.sqrt(building_footprint)
