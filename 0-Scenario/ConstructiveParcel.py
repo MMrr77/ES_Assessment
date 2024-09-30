@@ -1,3 +1,5 @@
+### This is the code first select parcels (resf.shp) that can be constructed on based on the allowed land types (grundnutzung.shp) and then filter out parcels that already have GWR (GWR_SZ.shp) and save the remaining parcels to a new shapefile (noBD_conparcel.shp).
+
 import geopandas as gpd
 import pandas as pd
 import numpy as np
@@ -10,13 +12,16 @@ GWR_p= "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/0
 noBD_conparcels = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/1_predict_newbds_parcels/noBD_conparcel.shp"
 
 
-
 parcels = gpd.read_file(resf_path)
 land_types = gpd.read_file(grundnutzung_path)
 GWR = gpd.read_file(GWR_p)
 
 if parcels.crs != land_types.crs:
     land_types = land_types.to_crs(parcels.crs)
+
+
+if GWR.crs != parcels.crs:
+    GWR = GWR.to_crs(parcels.crs)
 
 
 parcels = parcels.dropna(subset=['EGRIS_EGRI'])
@@ -30,18 +35,21 @@ allowed_typ_kommun = [
 building_land = land_types[land_types['typ_kommun'].isin(allowed_typ_kommun)]
 
 # spatial intersection between parcels with ID and the filtered building land
-intersected = gpd.overlay(parcels, building_land, how='intersection')
+intersected = gpd.overlay(parcels, building_land, how='intersection', keep_geom_type=False)
 
 # Dissolve by EGID
 intersected_dissolved = intersected.dissolve(by='EGRIS_EGRI', as_index=False, aggfunc='first')
-intersected_dissolved['land_type_code'] = intersected['typ_kommun']
+intersected_dissolved['typ_kommun'] = intersected['typ_kommun']
 
 # Compute area ratio - only significant overlaps are considered
 intersected_dissolved['intersect_area'] = intersected_dissolved.area
 parcels['parcel_area'] = parcels.area
 
+print(parcels.columns)
+print(intersected_dissolved.columns)
+
 # Merge the intersected dissolved data back
-merged = parcels.merge(intersected_dissolved[['intersect_area']], how='left', on='EGRIS_EGRI')
+merged = parcels.merge(intersected_dissolved[['EGRIS_EGRI', 'intersect_area', 'typ_kommun']], how='left', on='EGRIS_EGRI')
 
 # area ratio
 merged['area_ratio'] = merged['intersect_area'] / merged['parcel_area']
