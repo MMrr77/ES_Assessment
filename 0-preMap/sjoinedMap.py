@@ -15,27 +15,34 @@ predicted_buildings_path = '/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUP
 land_use_gdf = gpd.read_file(land_use_map_path)
 predicted_buildings_gdf = gpd.read_file(predicted_buildings_path)
 
-###### Identify intersection
-predicted_buildings_gdf = predicted_buildings_gdf.sjoin(land_use_gdf[land_use_gdf['Art'] == 'Gebaeude'], how='left', predicate='intersects')
-
-###### Update attributes
+# Update attributes for predicted buildings
 predicted_buildings_gdf['Art'] = 'Gebaeude'
-predicted_buildings_gdf['new_construct'] = 1 
+predicted_buildings_gdf['new_construct'] = 1  # Mark new constructions
 
-###### Add to map
+# Create a 2.5m buffer (offset) around the new buildings
+buffer_distance = 2.5
+predicted_buildings_buffer = predicted_buildings_gdf.copy()  # Copy the building polygons
+predicted_buildings_buffer['geometry'] = predicted_buildings_gdf.buffer(buffer_distance)  # Create buffer around buildings
+predicted_buildings_buffer['Art'] = 'uebrige_befestigte'  # Assign 'uebrige_befestigte' to the buffer polygons
+predicted_buildings_buffer['new_construct'] = None  # Buffers are not new constructions
+
+# To ensure that buffers do not overlap with the buildings, subtract the building geometries from the buffers
+predicted_buildings_buffer['geometry'] = predicted_buildings_buffer['geometry'].difference(predicted_buildings_gdf.unary_union)
+
+# Combine the new buildings and buffer polygons
+buildings_and_buffers_union = predicted_buildings_gdf.unary_union.union(predicted_buildings_buffer.unary_union)
+
+# Remove the original areas in the land use map that intersect with the new buildings or their buffers
+land_use_gdf = land_use_gdf[~land_use_gdf.intersects(buildings_and_buffers_union)]
+
+# Add the new buildings to the land use map
 land_use_gdf = gpd.GeoDataFrame(pd.concat([land_use_gdf, predicted_buildings_gdf], ignore_index=True))
 
-###### Buffer around the new buildings to identify the surrounding areas
-###### Identify surrounding "Acker_Wiese_Weide" areas and update them to "Pavement"
-buffer_distance = 20
-predicted_buildings_buffer = predicted_buildings_gdf.buffer(buffer_distance)
+# Add the buffer polygons (with 'uebrige_befestigte' as 'Art') to the land use map
+land_use_gdf = gpd.GeoDataFrame(pd.concat([land_use_gdf, predicted_buildings_buffer], ignore_index=True))
 
-# Update "Acker_Wiese_Weide" to "Pavement" where they intersect with the buffer
-land_use_gdf.loc[land_use_gdf.intersects(predicted_buildings_buffer.unary_union) & 
-                 (land_use_gdf['Art'] == 'Acker_Wiese_Weide'), 'Art'] = 'uebrige_befestigte'
-
-# Step 6: Save the updated land use map to a new shapefile
-output_shapefile_path = '/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/2_join_bds_to_LULC/sjMap_1002.shp'  # Replace with desired output path
+# Save the updated land use map to a new shapefile
+output_shapefile_path = '/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/2_join_bds_to_LULC/sjMap_1002_2035.shp'
 land_use_gdf.to_file(output_shapefile_path)
 
 # Print the first few rows to verify
