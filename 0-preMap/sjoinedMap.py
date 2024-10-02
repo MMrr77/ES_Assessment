@@ -10,7 +10,7 @@ from shapely.geometry import Polygon
 
 ###### lcsf map and buildings footprint shp
 land_use_map_path = '/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/1_predict_newbds_parcels/lcsf.shp' 
-predicted_buildings_path = '/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/1_predict_newbds_parcels/rectangles_from_centroids.shp' 
+predicted_buildings_path = '/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/1_predict_newbds_parcels/bdft_pred.shp' 
 
 land_use_gdf = gpd.read_file(land_use_map_path)
 predicted_buildings_gdf = gpd.read_file(predicted_buildings_path)
@@ -35,7 +35,7 @@ land_use_gdf.loc[land_use_gdf.intersects(predicted_buildings_buffer.unary_union)
                  (land_use_gdf['Art'] == 'Acker_Wiese_Weide'), 'Art'] = 'uebrige_befestigte'
 
 # Step 6: Save the updated land use map to a new shapefile
-output_shapefile_path = '/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/2_join_bds_to_LULC/sjoinedMap.shp'  # Replace with desired output path
+output_shapefile_path = '/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/2_join_bds_to_LULC/sjMap_1002.shp'  # Replace with desired output path
 land_use_gdf.to_file(output_shapefile_path)
 
 # Print the first few rows to verify

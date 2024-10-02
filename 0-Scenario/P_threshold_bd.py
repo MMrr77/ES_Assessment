@@ -138,15 +138,17 @@ for _, row in selected_parcels.iterrows():
 
     ##### create oriented rectangle
     rectangle = create_oriented_rectangle(centroid, width, height, orientation_angle)
+    area = rectangle.area
 
     ##### add to gdf along with VG and bdft
     rectangles_list.append({
         'geometry': rectangle,
         'VG': VG,
         'bdft': building_footprint,
+        'area': area
     })
 
-rectangles_gdf = gpd.GeoDataFrame(rectangles_list, columns=['geometry', 'VG', 'building_footprint'], crs=parcels_with_far.crs)
+rectangles_gdf = gpd.GeoDataFrame(rectangles_list, columns=['geometry', 'VG', 'building_footprint', 'area'], crs=parcels_with_far.crs)
 
 selected_parcels.to_file(conparcel_target)
 rectangles_gdf.to_file(bdft_pred)
