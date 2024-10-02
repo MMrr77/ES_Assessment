@@ -51,7 +51,9 @@ merged = parcels.merge(intersected_dissolved[['EGRIS_EGRI', 'intersect_area', 't
 merged['area_ratio'] = merged['intersect_area'] / merged['parcel_area']
 
 # Filter out parcels that don't overlap significantly (area_ratio > 0.5)
-selected_parcels = merged[merged['area_ratio'] > 0.5]
+selected_parcels = merged[merged['area_ratio'] > 0.3]
+# selected_parcels.to_file(construct_parcel_p)
+
 
 # Exclude parcels overlapped with roads in lcsf.shp where Art=Strasse_Weg， Trottoir
 roads = lcsf[lcsf['Art'].isin(['Strasse_Weg', 'Trottoir'])]  # Filter road
@@ -85,22 +87,14 @@ construct_parcel_p['perimeter'] = construct_parcel_p.geometry.length
 
 construct_parcel_p['perimeter_area_ratio'] = construct_parcel_p['perimeter'] / construct_parcel_p['parcel_area']
 
-# Distribution of perimeter/area ratio, to select road(whose ratio is higher than general)
-Q1 = construct_parcel_p['perimeter_area_ratio'].quantile(0.25)  # 25th percentile
-Q3 = construct_parcel_p['perimeter_area_ratio'].quantile(0.75)  # 75th percentile
-IQR = Q3 - Q1
-
-lower_bound = Q1 - 1.5 * IQR
-upper_bound = Q3 + 1.5 * IQR
-
-# Filter out parcels that are outliers based on perimeter-to-area ratio
-filtered_roads = construct_parcel_p[(construct_parcel_p['perimeter_area_ratio'] >= lower_bound) & (construct_parcel_p['perimeter_area_ratio'] <= upper_bound)]
+# Filter out parcels that are outliers based on perimeter-to-area ratio (< 0.25)
+filtered_roads = construct_parcel_p[construct_parcel_p['perimeter_area_ratio'] <= 0.25]
 
 filtered_roads.to_file(construct_p_noRD)
 print(f"Filtered parcels based on perimeter-to-area ratio saved to {construct_p_noRD}.")
 
 
-#####
+#####z
 # Filter out parcels that already have GWR (existing buildings)
 construct_p_noRD = gpd.read_file(construct_p_noRD)
 
