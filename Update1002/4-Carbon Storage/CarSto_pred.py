@@ -1,9 +1,9 @@
 import geopandas as gpd
 import pandas as pd
 
-lcsf_pred_path ="/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/2_join_bds_to_LULC/sjoinedMap.shp"
+lcsf_pred_path ="/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/2_join_bds_to_LULC/sjMap_1002_2035.shp"
 biophysical_table_csv = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/6-CarbonSto/Car_BP.csv"
-carsto_pred_path = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/6-CarbonSto/CarSto_pred.shp"
+carsto_pred_path = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/Update1002/0-Data/6-CarbonSto/CarSto_pred.shp"
 
 
 lcsf_pred_gdf = gpd.read_file(lcsf_pred_path)

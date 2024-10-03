@@ -5,9 +5,9 @@ from rasterio.transform import from_origin
 import numpy as np
 
 # Paths to your shapefiles
-temp_pred_shp_path = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/8-Temperature/Temp_pred.shp"
-shadow_pred_path = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/9-Shade/shadow_pred.shp"
-output_raster_path = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/9-Shade/Temp_shade_pred.tif"
+temp_pred_shp_path = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/Update1002/0-Data/8-Temperature/Temp_pred.shp"
+shadow_pred_path = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/Update1002/0-Data/9-Shade/shadow_pred.shp"
+output_raster_path = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/Update1002/0-Data/9-Shade/Temp_shade_pred.tif"
 
 temp_pred_gdf = gpd.read_file(temp_pred_shp_path)
 shadow_pred_gdf = gpd.read_file(shadow_pred_path)

@@ -6,8 +6,8 @@ from datetime import datetime
 
 target_crs = "EPSG:2056"
 
-BDlcsf_pred_path = '/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/2_join_bds_to_LULC/sjoinedMap_shade.shp'
-shadow_pred_output_path = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/9-Shade/shadow_pred.shp"
+BDlcsf_pred_path = '/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/0-Data/2_join_bds_to_LULC/sjMap_1002_2035.shp'
+shadow_pred_output_path = "/Users/rrs/Library/CloudStorage/OneDrive-KTH/KTH/SUPD/0-Degree Project/02-All Codes/ES_Assessment/Update1002/0-Data/9-Shade/shadow_pred.shp"
 
 
 def calculate_sun_position(latitude, longitude, date_time):

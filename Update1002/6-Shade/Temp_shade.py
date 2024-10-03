@@ -63,3 +63,6 @@ with rasterio.open(
     dst.write(adjusted_temp_raster, 1)
 
 print(f"Adjusted temperature raster saved to {output_raster_path}")
+
+
+https://ethz.zoom.us/j/69643332752
